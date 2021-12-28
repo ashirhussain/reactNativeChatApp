@@ -6,9 +6,9 @@ import {
      Dimensions,       StatusBar
      } from 'react-native';
 import { SceneMap, TabView } from 'react-native-tab-view';
-import Chats from './Chats';
-import Status from './Status';
-import Calls from './Calls';
+import Chats from './components/Chats';
+import Status from './components/Status';
+import Calls from './components/Calls';
 import { NativeBaseProvider, Box, Text, Center } from 'native-base';
 const renderScene = SceneMap({
   first: Chats,
