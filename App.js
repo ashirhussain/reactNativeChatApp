@@ -3,19 +3,40 @@ import {
   StyleSheet,
    Pressable,
     Animated,
-     Dimensions,       StatusBar
+     Dimensions,
+     StatusBar       
      } from 'react-native';
 import { SceneMap, TabView } from 'react-native-tab-view';
 import Chats from './components/Chats';
 import Status from './components/Status';
 import Calls from './components/Calls';
-import { NativeBaseProvider, Box, Text, Center } from 'native-base';
+import { NativeBaseProvider, Box, Text, Center, HamburgerIcon, Menu } from 'native-base';
 const renderScene = SceneMap({
   first: Chats,
   second: Status,
   third: Calls
 
 });
+const Header = () => {
+  return (
+  <Box h='12%' w='100%' backgroundColor='#ffffff' display='flex' flexDirection='row'>
+<Text color='#000000' fontSize='20' marginTop='8'marginRight='56' marginLeft='2'>WhatsApp</Text>
+<Menu w='190' trigger={(triggerProps) => {
+  return (
+  <Pressable accessibilityLabel='More options menu' {...triggerProps}>
+<HamburgerIcon marginTop='8' />
+  </Pressable>
+  )
+}}>
+  <Menu.Item>settings</Menu.Item>
+  <Menu.Item>settings11</Menu.Item>
+  <Menu.Item>settings222</Menu.Item>
+  <Menu.Item>settings333</Menu.Item>
+  <Menu.Item>settings4444</Menu.Item>
+</Menu>
+  </Box>
+  )
+}
 
 export default function App() {
   const [index, setIndex] = React.useState(0);
@@ -61,13 +82,14 @@ export default function App() {
   };
   return (
     <NativeBaseProvider>
+      <Header />
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
         renderTabBar={renderTabBar}
         onIndexChange={setIndex}
         initialLayout={initialLayout}
-        style={{ marginTop: StatusBar.currentHeight }}
+        style={{ marginTop: 5 }}
       />
     </NativeBaseProvider>
   );
