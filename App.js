@@ -10,7 +10,9 @@ import { SceneMap, TabView } from 'react-native-tab-view';
 import Chats from './components/Chats';
 import Status from './components/Status';
 import Calls from './components/Calls';
-import { NativeBaseProvider, Box, Text, Center, HamburgerIcon, Menu } from 'native-base';
+import { NativeBaseProvider, Box, Text, Center, HamburgerIcon, Menu, Input, Icon } from 'native-base';
+import { Ionicons } from '@expo/vector-icons'
+
 const renderScene = SceneMap({
   first: Chats,
   second: Status,
@@ -18,9 +20,20 @@ const renderScene = SceneMap({
 
 });
 const Header = () => {
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false)
   return (
   <Box h='12%' w='100%' backgroundColor='#ffffff' display='flex' flexDirection='row'>
-<Text color='#000000' fontSize='20' marginTop='8'marginRight='56' marginLeft='2'>WhatsApp</Text>
+<Text color='#000000' fontSize='20' marginTop='8'marginRight='48' marginLeft='2'>WhatsApp</Text>
+<Input 
+  width={isSearchOpen ? '100' : '8'}
+  // borderWidth='0'
+  InputLeftElement={
+  <Icon size='6' marginTop='2' as={
+    <Ionicons name='ios-search'/>
+  } />
+ }
+ onPress={()=>{setIsSearchOpen(!isSearchOpen)}}
+ />
 <Menu w='190' trigger={(triggerProps) => {
   return (
   <Pressable accessibilityLabel='More options menu' {...triggerProps}>
