@@ -4,6 +4,7 @@ import {
    Pressable,
     Animated,
      Dimensions,
+     Keyboard,
      StatusBar       
      } from 'react-native';
 import { SceneMap, TabView } from 'react-native-tab-view';
@@ -21,23 +22,60 @@ const renderScene = SceneMap({
 });
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = React.useState(false)
+  const [searchText, setSearchText] = React.useState('')
+  const inputElement = React.useRef(null)
+  const handleTextInputClick = () => {
+    setIsSearchOpen(!isSearchOpen)
+    inputElement.current.focus()
+  }
   return (
   <Box h='12%' w='100%' backgroundColor='#ffffff' display='flex' flexDirection='row'>
-<Text color='#000000' fontSize='20' marginTop='8'marginRight='48' marginLeft='2'>WhatsApp</Text>
+{isSearchOpen ?
+  <Icon size='6' marginLeft='4' marginTop='10' 
+    as={
+      <Ionicons 
+      name='arrow-back-outline'
+      onPress={()=>{
+        setIsSearchOpen(!isSearchOpen)
+        inputElement.current.blur()
+      }}
+    />
+  } /> : 
+  <Text 
+  color='#000000'
+  fontSize='20'
+  marginTop='8'
+  marginRight='40'
+  marginLeft='4'
+  >
+    WhatsApp
+  </Text>}
 <Input 
-  width={isSearchOpen ? '100' : '8'}
-  // borderWidth='0'
-  InputLeftElement={
-  <Icon size='6' marginTop='2' as={
-    <Ionicons name='ios-search'/>
+  width={isSearchOpen ? '90%' : '10'}
+  marginTop={isSearchOpen ? '8' : '0'}
+  height={isSearchOpen ? '10' : '24'}
+  paddingLeft={isSearchOpen ? '6' : '2'}
+  ref={inputElement}
+  fontSize='md'
+  onPress={()=>{
+    handleTextInputClick()
+   }}
+  borderWidth='0'
+  InputRightElement={
+  <Icon size='6' marginRight='4' as={
+    <Ionicons 
+    name='ios-search'
+    onPress={()=>{
+     handleTextInputClick()
+    }}
+    />
   } />
  }
- onPress={()=>{setIsSearchOpen(!isSearchOpen)}}
  />
 <Menu w='190' trigger={(triggerProps) => {
   return (
   <Pressable accessibilityLabel='More options menu' {...triggerProps}>
-<HamburgerIcon marginTop='8' />
+    {!isSearchOpen && <HamburgerIcon marginTop='8' marginLeft='4'/>}
   </Pressable>
   )
 }}>
