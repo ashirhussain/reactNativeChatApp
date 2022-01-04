@@ -3,21 +3,20 @@ import {
   StyleSheet,
    Pressable,
     Animated,
-     Dimensions,
-     Keyboard,
-     StatusBar       
+     Dimensions      
      } from 'react-native';
 import { SceneMap, TabView } from 'react-native-tab-view';
 import Chats from './components/Chats';
 import Status from './components/Status';
 import Calls from './components/Calls';
-import { NativeBaseProvider, Box, Text, Center, HamburgerIcon, Menu, Input, Icon } from 'native-base';
+import { NativeBaseProvider, Box, Text, HamburgerIcon, Menu, Input, Icon } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
 
 const renderScene = SceneMap({
   first: Chats,
-  second: Status,
-  third: Calls
+  second: Chats,
+  third: Status,
+  fourth: Calls
 
 });
 const Header = () => {
@@ -92,9 +91,10 @@ const Header = () => {
 export default function App() {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'Chats' },
-    { key: 'second', title: 'Status' },
-    { key: 'third', title: 'Calls' },
+    { key: 'first', title: 'Camera' },
+    { key: 'second', title: 'Chats' },
+    { key: 'third', title: 'Status' },
+    { key: 'fourth', title: 'Calls' },
   ]);
   const initialLayout = { width: Dimensions.get('window').width };
   const renderTabBar = (props) => {
@@ -122,8 +122,15 @@ export default function App() {
                 onPress={() => {
                   console.log(i);
                   setIndex(i);
-                }}>
-                <Animated.Text style={{ color }}>{route.title}</Animated.Text>
+                }}>{ route.key !== 'first' ? 
+                <Animated.Text style={{ color }}>{route.title}</Animated.Text> :
+                <Icon size='6' 
+                  as={
+                    <Ionicons 
+                    name='camera-outline'
+                  />
+                } />
+              } 
               </Pressable>
             </Box>
           );
