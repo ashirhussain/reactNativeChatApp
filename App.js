@@ -9,12 +9,13 @@ import {
 import { SceneMap, TabView } from 'react-native-tab-view';
 import Chats from './components/Chats';
 import Status from './components/Status';
+import CameraComponent from './components/Camera';
 import Calls from './components/Calls';
 import { NativeBaseProvider, Box, Icon } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'
 
 const renderScene = SceneMap({
-  first: Chats,
+  first: CameraComponent,
   second: Chats,
   third: Status,
   fourth: Calls
@@ -22,7 +23,7 @@ const renderScene = SceneMap({
 });
 
 export default function App() {
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(1);
   const [routes] = React.useState([
     { key: 'first', title: 'Camera' },
     { key: 'second', title: 'Chats' },
